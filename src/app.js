@@ -1,0 +1,17 @@
+const obj= require('./logger')
+const obj2= require('./util/helper')  //import statements
+const obj3=require('./Validator/formatter')
+const obj4 = require('lodash')
+obj.log('Ayush Jain')
+obj.Welcome()
+console.log("The main link to this point is." +obj.endpoint)
+ obj2.printDate()
+ obj2.printMonth()
+ obj2.getBatchInfo()
+ obj3.Trim("    FunctionUp    ")
+ obj3.lowercase('AYUSH')
+ obj3.uppercase('ayush')
+console.log(obj4.chunk(['Jan','Feb','Mar','April','May','June','July','Aug','Sept','Oct','Nov','Dec'],3))
+console.log(obj4.tail([1,3,5,7,9,11,13,15,17,19]));
+console.log(obj4.union([1,2,3,4],[2,4,5,6],[4,5,6,7],[6,7,8,9],[9,10,11,12]))
+console.log(obj4.fromPairs([["horror","The Shining"], ["drama","Titanic"],["thriller","Shutter Island"],["fantasy","Pans Labyrinth"]]))
