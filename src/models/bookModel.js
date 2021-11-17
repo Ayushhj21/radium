@@ -15,33 +15,18 @@ const bookSchema= new mongoose.Schema({
         type: String,
         required: true
     },
-    ISBN: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    author: String,
-    tags: [ String ], //array of strings 
-    year: Number,
-    isPublished: {
-        type: Boolean, //Boolean
-        default: false
-    },
     prices: {
         indianPrice: String,
         europeanPrice: String,
-        usaPrice: String,
-        nepalPrice: String,
-        japanPrice: String,
-        chinesePrice: String,
-        sudanPrice: String
     },
-    sales: {
-        type: Number,
-        default : 0
+    year:{
+        type:String,
+        default:2021
     },
-    completionDate: Date
-
+    tags: [String], 
+    authorName: String,
+    totalPages:String,
+    stockAvailable: Boolean,
 }, {timestamps: true} )
 
 module.exports = mongoose.model( 'Book', bookSchema ) 

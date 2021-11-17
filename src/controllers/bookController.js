@@ -7,9 +7,18 @@ const createBook = async function (req, res) {
     res.send({msg: savedBook})
 }
 
-const getBooksData= async function (req, res) {
 
-        // let allBooks= await BookModel.find()
+const getBooksData= async function (req, res) {
+let allBooks= await BookModel.find()
+res.send({msg:allBooks})
+}
+
+const createBooksColl= async function(req,res){
+    var data=req.body
+    let savedData=await BookModel.create(data)
+    res.send({msg: savedData})
+}
+
         // let allBooks= await BookModel.find().count()
         // let allBooks= await BookModel.find( { sales: 0 } )
         // let allBooks= await BookModel.find( { sales: 0 } ).count()
@@ -55,15 +64,15 @@ const getBooksData= async function (req, res) {
         // let allBooks= await BookModel.find( {  bookName: /Node$/i   } ) //ends with Node
         // let allBooks= await BookModel.find( {  bookName: /^Intro/i   } ) //starts with Node
 
-        let a=5
-        let b=6
-        let c=  a+b
-        console.log(c)
+        //let a=5
+        //let b=6
+        //let c=  a+b
+        //console.log(c)
 
 
 
         
-        let allBooks= await BookModel.find( { "prices.europeanPrice" : "4Pounds"} ) // without await, this line will start to get executed..but the server will move to next line without COMPLETING the execution..this might cause code to break in the next few lines
+       // let allBooks= await BookModel.find( { "prices.europeanPrice" : "4Pounds"} ) // without await, this line will start to get executed..but the server will move to next line without COMPLETING the execution..this might cause code to break in the next few lines
         // hence we use await to ask the program to wait for the completion of this line..till this line completes, execution wont move to next line
 
         // await is typically used at 2 places:
@@ -73,8 +82,8 @@ const getBooksData= async function (req, res) {
 
         //NOTE: await can not be used inside array functions like forEach / map / filter etc..self discovery and do post 
 
-        res.send({msg: allBooks})        
-    }
+        //res.send({msg: allBooks})        
+   // }
 
 module.exports.createBook= createBook
 module.exports.getBooksData= getBooksData
