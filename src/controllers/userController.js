@@ -9,6 +9,7 @@ const basicCode= async function (req, res) {
 
 
 
+
 const createUser= async function (req, res) {   
    var data= req.body
     let savedData= await UserModel.create(data)

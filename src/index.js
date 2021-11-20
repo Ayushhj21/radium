@@ -9,11 +9,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-const midGlb= function (req, res, next) {
-    console.log("Hi I am a GLOBAL middleware");
-    //logic
+const assignmentMidGlb= function (req, res, next) {
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time
+    let ip=req.ip;
+    let url=req.originalUrl;
+    console.log(`${dateTime} ${ip} ${url}`);
     next()    
 }
+
+app.use(assignmentMidGlb)
 
 const mongoose = require('mongoose')
 
