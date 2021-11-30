@@ -64,6 +64,21 @@ let deleteBlogQuery=async function(req,res){
 $push: { tags: { $each: req.body.tags } }, $push: { subcategory: { $each: req.body.subcategory } }
 
 
- if(req.query.authorId==authorId){   
-                            //loggedin User(query authorid)
+
       
+
+
+
+     let newData=req.body();
+
+if(req.query.authorId==newData.authorId){
+
+    let savedEntry=await blogModel.create(newData)
+
+    res.send({msg:entry created succesfully,enetry:savedEntry})
+
+}else{
+
+    res.send({msg:u can not created enetry by using others id})
+
+}
