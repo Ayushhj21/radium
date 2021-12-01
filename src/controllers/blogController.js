@@ -10,7 +10,7 @@ const createBlog = async function (req, res) {
 
 
         //Check if the author in request is a valid author
-        
+
         let authorFromRequest = await AuthorModel.findById(authorId);
 
         if (authorFromRequest) {
@@ -43,7 +43,7 @@ const getThisBlog = async function (req, res) {
         let category = req.query.category
         let subcategory = req.query.subcategory
         let blog = await blogModel.find({ $or: [{ title: title }, { authorId: authorId }, { category: category }, { tags: tags }, { subcategory: subcategory }] })
-
+        console.log(blog)
         if (blog) {
 
             for (let element of blog) {
@@ -80,28 +80,53 @@ const getThisBlog = async function (req, res) {
 
 //Q4-
 const updateBlog = async function (req, res) {
-    let blogId = req.params.blogId
-    //let newTitle = req.body.title
-    let blog = await blogModel.findById(blogId)
-    if (blog.authorId == req.query.authorId) {
-        let newBody = req.body
-        if (newBody.isPublished === true) {
-            newBody.publishedAt = String(new Date())
-        }
+    try {
+        let blogId = req.params.blogId;
+        const body = req.body.body;
+        const title = req.body.title;
+        const tags = req.body.tags;
+        const subcategory = req.body.subcategory;
 
-        let blogDetails = await blogModel.findOneAndUpdate({ _id: blogId, isDeleted: false }, newBody, { new: true })
-        // $push: { tags: { $each: req.body.tags } }, $push: { subcategory: { $each: req.body.subcategory } }
-        if (blogDetails) {
-            res.status(200).send({ status: true, message: blogDetails })
-        } else {
-            res.status(404).send({ status: false, msg: "Incorrect credentials !" })
-        }
+        let update = {}
+        update.title = await blogModel.findOneAndUpdate({ _id: blogId, isDeleted: false }, { title: title }, { new: true })
+        update.body = await blogModel.findOneAndUpdate({ _id: blogId, isDeleted: false }, { body: body }, { new: true })
+        update.tags = await blogModel.findOneAndUpdate({ _id: blogId, isDeleted: false }, { $push: { tags: tags } }, { new: true })
+        update.subcategory = await blogModel.findOneAndUpdate({ _id: blogId, isDeleted: false }, { $push: { subcategory: subcategory } }, { new: true })
+        update.isPublished = await blogModel.findOneAndUpdate({ _id: blogId, isDeleted: false }, { isPublished: true }, { new: true })
+        update.publishedAt = await blogModel.findOneAndUpdate({ _id: blogId, isDeleted: false }, { publishedAt: String(new Date()) }, { new: true })
+       // console.log(update)
+        let updatedBlog = await blogModel.find({ _id: blogId, isDeleted: false })
 
-    } else {
-        res.status(404).send({ status: false, msg: "You are not a valid author to access this blog" })
+        res.status(201).send({ data: updatedBlog })
+    } catch (err) {
+        res.status(500).send({ msg: err });
     }
+}
+//     let blog = await blogModel.findById(blogId)
+//     if (blog.authorId == req.query.authorId) {
+//         let newBody = req.body
+//         let tags=req.body.tags;
+//         let subcategory=req.body.subcategory
+//         if (newBody.isPublished === true) {
+//             newBody.publishedAt = String(new Date())
+//         }
+//                              ///values are repeating and and replacing the arrays that we already have
+//         let blogDetails = await blogModel.findOneAndUpdate({ _id: blogId, isDeleted: false }, newBody, { new: true })
+//         let updatedTags = await blogModel.findOneAndUpdate({ _id: blogId, isDeleted: false }, {$push:{tags:{$each:tags}}}, { new: true })
+//         let updatedSubcategory = await blogModel.findOneAndUpdate({ _id: blogId, isDeleted: false }, {$push:{subcategory:{$each:subcategory}}}, { new: true })
+//         let updatedBlog= await blogModel.find({_id: blogId, isDeleted: false})
+//         // $push: { tags: { $each: req.body.tags } }, $push: { subcategory: { $each: req.body.subcategory } }
+//         if (updatedBlog) {
+//             res.status(200).send({ status: true, message: updatedBlog })
+//         } else {
+//             res.status(404).send({ status: false, msg: "Incorrect credentials !" })
+//         }
 
-};
+//     } else {
+//         res.status(404).send({ status: false, msg: "You are not a valid author to access this blog" })
+//     }
+
+// };
 
 
 
