@@ -14,12 +14,11 @@ const blogSchema = new mongoose.Schema(
 
         tags: [String],
         category: { type: String, required: true },
-        //examples: [technology, entertainment, life style, food, fashion]}, 
-        subcategory: [String],       //examples[technology-[web development, mobile development, AI, ML etc]] }, 
-        isPublished: { type: Boolean, default: false },//type:Boolean
-        publishedAt: String,  // {when the blog is published}, 
+        subcategory: [String],      
+        isPublished: { type: Boolean, default: false },
+        publishedAt: String,  
         isDeleted: { type: Boolean, default: false },
-        deletedAt: String, //when the document is deleted
+        deletedAt: String, 
 
     }, { timestamps: true }
 );
