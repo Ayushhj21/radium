@@ -28,14 +28,14 @@ const authorsCollection = async function (req, res) {
 const login= async function (req, res) {
 
     let loginBody=req.body;
-    let author=await AuthorModel.findOne({$and:[{email:loginBody.email},{password:loginBody.password},{isDeleted:false}]})
-    console.log(author)
+    let author=await AuthorModel.findOne({$and:[{email:loginBody.email},{password:loginBody.password}]})
+   
     
     if (author){
         let token=await jwt.sign({_id:author._id},"radium")
         res.setHeader("x-api-key",token) 
         res.send({status:true,msg:"user logged in successfully"})
-        // 
+         
     }else{
         res.send({
             status:false,

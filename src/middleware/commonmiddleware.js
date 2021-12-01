@@ -7,7 +7,7 @@ const validator = function (req, res, next) {
         const validToken = jwt.verify(token, "radium")
         if (validToken) {
             
-            console.log("u can go to main function now")
+            console.log("you can go to main function now")
             req.validToken=validToken
             next();
         }else {

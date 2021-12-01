@@ -63,7 +63,7 @@ const updateDetails = async function (req, res) {
         Update.tags = await blogModel.findOneAndUpdate({ _id: req.params.blogId , isDeleted:false, authorId:id}, { $push: { tags: tags } }, { new: true })
         Update.subcategory = await blogModel.findOneAndUpdate({ _id: req.params.blogId, isDeleted:false, authorId:id  }, { $push: { subcategory: subcategory } }, { new: true })
         Update.isPublished = await blogModel.findOneAndUpdate({ _id: req.params.blogId , isDeleted:false, authorId:id }, { isPublished: true }, { new: true })
-        Update.publishedAt = await blogModel.findOneAndUpdate({ _id: req.params.blogId, isDeleted:false, authorId:id  }, { publishedAt: Date() }, { new: true })
+        Update.publishedAt = await blogModel.findOneAndUpdate({ _id: req.params.blogId, isDeleted:false, authorId:id  }, { publishedAt: String(new Date()) }, { new: true })
         let updatedBlog = await blogModel.find({ _id: req.params.blogId, isDeleted:false, authorId:id })
 
         res.send({ data: updatedBlog })
@@ -92,7 +92,7 @@ let deleteBlog = async function (req, res) {
         if(DeletedBlog){
             res.status(200).send( {status: true, msg: "Blog has been deleted" })
         }else{
-            res.send({status: false, msg: "either the blog is already deleted OR u are not valid author to access this blog" })
+            res.status(404).send({status: false, msg: "either the blog is already deleted or you are not valid author to access this blog" })
         }
     }
     catch (err) {
@@ -125,13 +125,13 @@ const specificDelete = async function (req, res) {
         if (req.query.subcategory) {
             filter["subcategory"] = req.query.subcategory;
         }
-        console.log(filter)
+       
         let deletedTime = String(new Date());
         let deleteData = await blogModel.findOneAndUpdate(filter, {
             isDeleted: true,
             deletedAt: deletedTime
         });
-        console.log(deleteData)
+      
         if (deleteData) {
             res.status(200).send({ status: true, msg: "Blog has been deleted" });
         } else {
