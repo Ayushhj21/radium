@@ -57,7 +57,7 @@ let deleteBlogQuery=async function(req,res){
 }
 
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE0OTM2Njg0NWM5MzhlMDMxODY1NWEiLCJpYXQiOjE2MzgyNjQxMTd9.BwFN0wGGtzAKIiHt9S_A7eqSj1JnmBTXF8Ie6mc88GA
-
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWE0YTJiMGZkYzUxNjZlOWUyMDJlMDgiLCJpYXQiOjE2MzgzNjQyNjd9.tPnqhRhwNlFHlJXqFQOHajYnDTPmGnSNez4ne9gKi18
 
 
 

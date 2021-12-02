@@ -6,8 +6,8 @@ const commonMw=require("../middleware/commonmiddleware")
 //Q1
 const authorsCollection = async function (req, res) {
     try {
-        var data = req.body
-        let email = req.email
+        let data = req.body
+        
         if (data) {
             let savedData = await AuthorModel.create(data)
             res.status(200).send({ status: true, msg: savedData })
@@ -34,10 +34,10 @@ const login= async function (req, res) {
     if (author){
         let token=await jwt.sign({_id:author._id},"radium")
         res.setHeader("x-api-key",token) 
-        res.send({status:true,msg:"user logged in successfully"})
+        res.status(200).send({status:true,msg:"user logged in successfully"})
          
     }else{
-        res.send({
+        res.status(404).send({
             status:false,
             msg:"invalid Credentials"
         })

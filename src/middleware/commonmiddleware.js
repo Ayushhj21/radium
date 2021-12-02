@@ -5,6 +5,7 @@ const validator = function (req, res, next) {
     let token = req.headers["x-api-key"]
     if (token) {
         const validToken = jwt.verify(token, "radium")
+        console.log(validToken)
         if (validToken) {
             
             console.log("you can go to main function now")
