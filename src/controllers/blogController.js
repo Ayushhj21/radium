@@ -5,7 +5,7 @@ const AuthorModel = require("../models/authorsModel")
 const createBlog = async (req, res) => {
     try {
         if (req.body.authorId == req.validToken._id) {
-            let savedData = await blogModel.create(req.body)
+           let savedData = await blogModel.create(req.body)
             res.status(200).send({ status: true, data: savedData })
         } else (
             res.status(404).send({ status: false, msg: "provide your authorId" })
