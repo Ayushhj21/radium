@@ -1,31 +1,36 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
 
-const AuthorController= require("../controllers/authorcontroller")
-const BlogController= require("../controllers/blogController")
-const commonMw=require("../middleware/commonmiddleware")
+const userController = require('../controllers/userController')
+const bookController = require('../controllers/bookController')
+const reviewController = require('../controllers/reviewController')
+const mw = require('../middlewares/authMiddleware')
+
+// User routes
+router.post('/register', userController.createUser);
+router.post('/login', userController.loginUser);
 
 
-router.post('/authors',AuthorController.authorsCollection);
-router.post('/blogs',commonMw.validator, BlogController.createBlog);
-router.get("/blogs",commonMw.validator,BlogController.getThisBlog) 
-router.put('/blogs/:blogId',commonMw.validator,BlogController.updateDetails)
-router.delete("/blog/:blogId",commonMw.validator,BlogController.deleteBlog)
-router.delete("/blog",commonMw.validator,BlogController.specificDelete)
+// Book routes
+router.post('/books', mw.authMiddleware, bookController.createBook)
+router.get('/books', mw.authMiddleware, bookController.getAllBooks)
+router.get('/books/:bookId', mw.authMiddleware, bookController.getBookDetailsById)
+router.put('/books/:bookId', mw.authMiddleware, bookController.updateBook)
+router.delete('/books/:bookId', mw.authMiddleware, bookController.deleteBookByID)
 
-////////////////
-
-router.post("/login", AuthorController.login)   
-
-
-
-
-
-
-
-
-
-
+// Review routes
+router.post('/books/:bookId/review', reviewController.addReview)
+router.put('/books/:bookId/review/:reviewId', reviewController.updateReview)
+router.delete('/books/:bookId/review/:reviewId', reviewController.deleteReview)
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
